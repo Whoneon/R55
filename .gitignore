@@ -1,0 +1,33 @@
+# LaTeX build artifacts
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.synctex*
+paper/*.fdb_latexmk
+paper/*.fls
+
+# Julia
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+
+# Python
+__pycache__/
+*.pyc
+
+# Tools (compiled binaries)
+tools/march_cu_fixed/march_cu
+tools/march_cu_optimized/march_cu
+tools/**/*.o
+
+# Large SAT files (reproducible from scripts)
+results/sat/*.cnf
+results/sat/cubes_43/
+
+# Temporary
+*.tmp
+*~
+.DS_Store
+nohup.out

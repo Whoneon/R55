@@ -1,0 +1,6 @@
+Lehav Extension Algorithm — Complete Run
+Date: 2026-03-28T16:31:41.414
+Catalog: 656 graphs (328 + complements)
+Phase 1: 27552 vertex-duplication candidates, 0 valid
+Phase 2: 0 feasible backtracking extensions for ALL 656 graphs
+Conclusion: R(5,5,43) = empty (consistent with R(5,5) = 43)

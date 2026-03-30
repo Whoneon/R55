@@ -1,0 +1,9 @@
+=== smsg su cubi R(5,5,43) — cubi 4-11, poi 3 ===
+
+Cubo 4: Total time: 1.275619
+  (wall: 1s)
+
+Cubo 5: Total time: 762.055481
+  (wall: 763s)
+
+Cubo 6: 
