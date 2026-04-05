@@ -26,8 +26,17 @@ tools/**/*.o
 results/sat/*.cnf
 results/sat/cubes_43/
 
+# Large result directories (logs, individual .result files)
+# Only metrics CSVs and summaries are committed
+results/sat/subcube_results_*/
+results/sat/hard_subcubes_*/
+results/sat/canonical_ssc/results/
+results/sat/canonical_ssc/level4/
+results/sat/solve_*.log
+
 # Temporary
 *.tmp
 *~
 .DS_Store
 nohup.out
+/tmp/

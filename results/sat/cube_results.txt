@@ -6,4 +6,20 @@ Cubo 4: Total time: 1.275619
 Cubo 5: Total time: 762.055481
   (wall: 763s)
 
-Cubo 6: 
+Cubo 6:   (wall: 125666s)
+
+Cubo 7:   (wall: 284s)
+
+Cubo 8: Total time: 74.325287
+  (wall: 75s)
+
+Cubo 9:   (wall: 65s)
+
+Cubo 10:   (wall: 7191s)
+
+Cubo 11: Total time: 25.812582
+  (wall: 26s)
+
+Cubo 3:   (wall: 3375s)
+
+=== COMPLETATO ===

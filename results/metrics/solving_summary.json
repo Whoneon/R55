@@ -1,0 +1,9 @@
+{
+  "extracted_at": "2026-04-05T19:03:57+02:00",
+  "levels": {
+    "L1": {"cutoff": 50, "total": 11, "unsat": 6, "hard": 5},
+    "L2": {"cutoff": 70, "total": 4483, "unsat": 0, "timeout": 85},
+    "L3": {"cutoff": 90, "total": 5439, "solved": 2900, "unsat": 2501, "timeout": 308},
+    "L4": {"cutoff": 110, "status": "pending"}
+  }
+}

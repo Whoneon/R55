@@ -9,7 +9,7 @@ Computational tools and results for the Ramsey number R(5,5).
 - **656 extremal graphs** in R(5,5,42) (328 base + 328 complements), cataloged by McKay--Radziszowski
 - **Extension tension** τ(G) computed for all 656 graphs: min=2, max=49, mean=27.3
   - τ=2 proven optimal by SAT (CaDiCaL + totalizer cardinality encoding)
-  - Two graphs (G₄₂, G₂₅₆) achieve τ=2: the closest any R(5,5,42) graph comes to extensibility
+  - Two graphs (G₄₂, G₂₅₆) achieve τ=2: the closest any R(5,5,42) graph comes to admitting a one-vertex extension. Their optimal neighbor sets force exactly two monochromatic K₅, sharing three vertices each.
 - **SAT Modulo Symmetries** (SMS) cube-and-conquer for R(5,5,43)
   - 11 canonical cubes at cutoff 50; 4483 at cutoff 70
   - smsg is 12–170× faster than CaDiCaL on symmetry-reduced cubes
@@ -21,10 +21,10 @@ Computational tools and results for the Ramsey number R(5,5).
 src/                          # Julia and Python source code
   RamseyR55.jl                # Core module: graph6 I/O, bitmask adjacency, K₅ counting
   analyze_656.jl              # Structural analysis of 656 extremal graphs
-  exact_tension.jl            # Extension tension τ(G) via multi-start local search
-  exact_tension_sat.py        # SAT-based exact verification of τ(G) via PySAT
-  exact_tension_cpsat.py      # CP-SAT formulation (alternative, slower)
-  exact_tension_maxsat.py     # MaxSAT formulation (alternative)
+  exact_tension.jl            # Extension tension τ(G): fast heuristic (multi-start local search)
+  exact_tension_sat.py        # Extension tension τ(G): exact SAT verification (PySAT + CaDiCaL)
+  exact_tension_cpsat.py      # Extension tension τ(G): CP-SAT formulation (alternative)
+  exact_tension_maxsat.py     # Extension tension τ(G): MaxSAT formulation (alternative)
   sat_encoding.jl             # DIMACS CNF encoder for R(5,5,n)
   sms_encoding.py             # SMS encoding
   flip_graph.jl               # Flip graph analysis
@@ -55,18 +55,27 @@ tools/
 - CaDiCaL (for SAT verification): https://github.com/arminbiere/cadical
 
 ### Extension tension (all 656 graphs)
+
+The computation is a two-stage pipeline:
+
+1. **Heuristic bounds** (`exact_tension.jl`, Julia): multi-start local search
+   with 500k random seeds, steepest-descent single-bit flips, and 2-bit
+   perturbations. Runs in ~17 minutes for all 656 graphs.
+2. **Exact verification** (`exact_tension_sat.py`, Python/PySAT): SAT-based
+   binary search with totalizer-encoded cardinality constraints and CaDiCaL.
+   Used to prove optimality for extreme cases (e.g., τ=2 in ~60s).
+
+The heuristic and exact results agree on all verified cases.
+
 ```bash
+# Step 1: compute heuristic τ(G) for all 656 graphs
 julia src/exact_tension.jl
 # Output: results/exact_tension.csv (~17 minutes)
-```
 
-### SAT verification of extreme cases
-```bash
-# Verify τ=2 for graph 42 (proven optimal in ~60s)
-python3 -c "
-from src.exact_tension_sat import verify_tau
-verify_tau('results/wcnf/tension_g042.wcnf')
-"
+# Step 2: verify extreme cases via SAT (optional, ~60s each)
+# First generate WCNF files (done automatically by exact_tension.jl for graph 1)
+# Then verify:
+python3 src/exact_tension_sat.py  # verifies τ=2 for graphs 42, 256
 ```
 
 ### SMS cubing
@@ -82,7 +91,7 @@ smsg -v 43 --dimacs results/sat/r55_43_sms.cnf --cube-file results/sat/cubes_sms
 If you use this code or data, please cite:
 ```bibtex
 @misc{R55study2026,
-  author = {},
+  author = {Whoneon},
   title = {A computational study of {R}(5,5)},
   year = {2026},
   url = {https://github.com/Whoneon/R55}

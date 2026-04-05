@@ -1,5 +1,5 @@
 # R(5,5) Project — Results Summary
-## Date: 2026-03-28
+## Date: 2026-03-30
 
 ## Infrastructure (Module A) — COMPLETE
 
@@ -27,7 +27,7 @@
 | Min edit distance | 1 (7 pairs) |
 | Max edit distance | 515 |
 | Mean edit distance | 414.26 |
-| Extension tension | 64-81 (100k random samples) |
+| Extension tension τ(G) | **2–49** (exact, multi-start local search + SAT verification) |
 
 ### Close pair analysis:
 - 7 pairs at edit distance 1, ALL differ by edge (37,38) or (35,36)
@@ -66,6 +66,35 @@
 This is consistent with R(5,5) = 43 and reproduces Lehav's result
 (arXiv:2411.04267) using Julia bitwise computation.
 
-## Next Steps
+## Extension Tension — Exact Results (2026-03-30)
 
-1. Begin LaTeX document (Module E)
+τ(G) computed for all 656 graphs via multi-start local search
+(`exact_tension.jl`). Extreme cases verified optimal by SAT
+(`exact_tension_sat.py`, CaDiCaL + totalizer cardinality).
+
+| Statistic | Value |
+|-----------|-------|
+| min τ     | **2** (base graphs G₄₂, G₂₅₆) |
+| max τ     | 49 (base graph G₇₈) |
+| mean τ    | 27.3 |
+| median τ  | 27 |
+
+The two τ=2 graphs are the closest any R(5,5,42) graph comes to
+admitting a one-vertex extension: their optimal neighbor sets force
+exactly two monochromatic K₅, sharing three vertices each.
+
+Full data: `exact_tension.csv` (656 rows with optimal neighbor sets).
+SAT verification instances: `wcnf/tension_g042.wcnf`, `wcnf/tension_g256.wcnf`.
+
+## SMS Cubing (2026-03-30)
+
+| Cube | Time (smsg) | Result |
+|------|------------|--------|
+| 1    | 195s       | UNSAT  |
+| 2    | 1s         | UNSAT  |
+| 4    | 1.3s       | UNSAT  |
+| 5    | 762s       | UNSAT  |
+| 3, 6 | >10h      | open   |
+| 7-11 | pending    | —      |
+
+Cutoff 70: 4483 canonical cubes generated (26 min).
